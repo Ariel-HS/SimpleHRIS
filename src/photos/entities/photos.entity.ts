@@ -9,13 +9,10 @@ export class Photos {
     @Column() 
     userId!: string;
 
-    @Column() 
-    path: string;
+    @Column({ type: 'blob' }) 
+    imgSrc: Buffer;
 
     @Column() mimeType: string;
-
-    @Column() 
-    sizeBytes: number;
 
     @OneToOne(type => Attendance, attendance => attendance.photo)
     attendance: Attendance;

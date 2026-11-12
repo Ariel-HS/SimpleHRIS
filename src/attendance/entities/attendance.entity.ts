@@ -16,7 +16,7 @@ export class Attendance {
     @Column()
     time: string;
 
-    @Column({ default: 'on-time' })
+    @Column({ default: 'absent' })
     status: 'on-time' | 'late' | 'absent';
 
     @OneToOne(type => Photos, photo => photo.attendance)
