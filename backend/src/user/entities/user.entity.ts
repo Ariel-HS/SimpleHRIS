@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, type Relation } from "typeorm";
 import { Attendance } from "../../attendance/entities/attendance.entity.js";
 
 @Entity()
@@ -9,7 +9,7 @@ export class User {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @Column()
@@ -18,6 +18,7 @@ export class User {
     @Column()
     role: 'admin' | 'staff';
 
-    @OneToMany(type => Attendance, attendance => attendance.user)
-    attendances: Attendance[];
+    @OneToMany(() => Attendance, (attendance) => attendance.user)
+    @JoinColumn()
+    attendances: Relation<Attendance[]>;
 }

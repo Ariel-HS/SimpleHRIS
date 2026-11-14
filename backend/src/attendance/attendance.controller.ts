@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, ParseIntPipe, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AttendanceService } from './attendance.service.js';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('attendance')
 export class AttendanceController {
@@ -12,19 +13,38 @@ export class AttendanceController {
     }
 
     // get staff attendance history
-    @Get('attendance/:userId')
-    myAttendance(@Param('userId') userId: number) {
+    @Get(':userId')
+    staffAttendance(@Param('userId') userId: number) {
         return this.attendanceService.getStaffAttendance(userId);
     }
 
-    @Post('check-in/:userId')
-    checkIn(
-        @Param('userId') userId: number,
-        @Body() body: 
-        { 
-            selfie: { type: 'string', format: 'binary' } 
+    // get staff attendance for a day
+    @Get('day/:userId')
+    dayAttendance(@Param('userId') userId: number, @Query('day') day?: string) {
+        if (day) {
+            return this.attendanceService.getStaffDayAttendance(userId, day);
+        } else {
+            return this.attendanceService.getStaffTodayAttendance(userId);
         }
+    }
+
+    // get staff attendance for a month
+    @Get('month/:userId')
+    monthAttendance(@Param('userId') userId: number, @Query('month') month: string) {
+        return this.attendanceService.getStaffMonthAttendance(userId, month)
+    }
+
+    @Post('check-in/:userId')
+    @UseInterceptors(FileInterceptor('selfie')) // 'selfie' = the form field name
+    checkIn(
+        @Param('userId', ParseIntPipe) userId: number,
+        @UploadedFile(new ParseFilePipe({
+            validators: [
+            new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024 }),
+            new FileTypeValidator({ fileType: /^image\/(jpeg|png)$/ }),
+            ],
+        })) selfie: Express.Multer.File,
     ) {
-        return this.attendanceService.checkIn(userId, body.selfie);
+        return this.attendanceService.checkIn(userId, selfie);
     }
 }

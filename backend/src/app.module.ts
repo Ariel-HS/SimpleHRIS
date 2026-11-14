@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
-import { AppController } from './app.controller.js';
-import { AppService } from './app.service.js';
+import { APP_GUARD } from '@nestjs/core'
 import { AttendanceModule } from './attendance/attendance.module.js';
 import { ApiGatewayModule } from './api-gateway/api-gateway.module.js';
 import { UserModule } from './user/user.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhotosModule } from './photos/photos.module.js';
-
+import { AuthModule } from './auth/auth.module.js';
+import { JwtAuthGuard } from './auth/guards/auth.guard.js'
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -17,7 +17,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       type: 'oracle',
       host: process.env.DB_HOST ?? 'localhost',
       port: parseInt(process.env.DB_PORT ?? '1521'),
-      username: process.env.DB_USERNAME ?? 'system',
+      username: process.env.DB_USERNAME ?? 'SYSTEM',
       password: process.env.DB_PASSWORD ?? 'oracle',
       database: process.env.DB_NAME ?? 'SimpleHRIS',
       autoLoadEntities: true,
@@ -36,8 +36,10 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ApiGatewayModule,
     UserModule,
     PhotosModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    { provide: APP_GUARD, useClass: JwtAuthGuard }
+  ],
 })
 export class AppModule {}
