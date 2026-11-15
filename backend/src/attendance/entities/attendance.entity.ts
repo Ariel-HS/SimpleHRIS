@@ -1,5 +1,4 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique, type Relation } from "typeorm";
-import { Photos } from "../../photos/entities/photos.entity.js";
 import { User } from "../../user/entities/user.entity.js";
 
 @Entity()
@@ -20,7 +19,6 @@ export class Attendance {
     @Column({ default: 'absent' })
     status: 'on-time' | 'late' | 'absent';
 
-    @OneToOne(() => Photos, (photo) => photo.attendance, { cascade: true })
-    @JoinColumn()
-    photo: Relation<Photos>;
+    @Column({ nullable: true })
+    photoId: number;
 }

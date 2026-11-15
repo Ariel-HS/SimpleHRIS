@@ -78,8 +78,8 @@ export default function TodayAttendance({ attendance, loading, error, onSubmitte
             </div>
         )
     // NOTE: Comment this to test on weekends
-    } else if (isWeekend(now)) {
-        body = <p className={mutedClass}>No attendance is needed on weekends.</p>
+    // } else if (isWeekend(now)) {
+    //     body = <p className={mutedClass}>No attendance is needed on weekends.</p>
     } else {
         body = (
             <div className="space-y-3">

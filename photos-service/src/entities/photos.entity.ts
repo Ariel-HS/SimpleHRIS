@@ -1,5 +1,4 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
-import { Attendance } from "../../attendance/entities/attendance.entity.js";
 
 @Entity()
 export class Photos {
@@ -10,7 +9,4 @@ export class Photos {
     imgSrc: Buffer;
 
     @Column() mimeType: string;
-
-    @OneToOne(() => Attendance, (attendance) => attendance.photo)
-    attendance: Relation<Attendance>;
 }

@@ -4,7 +4,6 @@ import { APP_GUARD } from '@nestjs/core'
 import { AttendanceModule } from './attendance/attendance.module.js';
 import { UserModule } from './user/user.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhotosModule } from './photos/photos.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { JwtAuthGuard } from './auth/guards/auth.guard.js'
 
@@ -18,7 +17,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       port: parseInt(process.env.DB_PORT ?? '1521'),
       username: process.env.DB_USERNAME ?? 'hris',
       password: process.env.DB_PASSWORD ?? '',
-      database: process.env.DB_NAME ?? 'FREEPDB1',
+      database: process.env.DB_SERVICE_NAME ?? 'FREEPDB1',
       autoLoadEntities: true,
       synchronize: process.env.DB_SYNCHRONIZE === 'true',
     }),
@@ -33,7 +32,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     AttendanceModule,
     UserModule,
-    PhotosModule,
     AuthModule,
   ],
   providers: [

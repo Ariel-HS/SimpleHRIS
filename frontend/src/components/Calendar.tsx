@@ -36,7 +36,7 @@ export default function Calendar({ month, onMonthChange, attendanceList = [], on
     const date = new Date(year, m, day)
     const iso = toISODate(date)
     const disabled = iso > todayISO 
-        || isWeekend(date) // NOTE: Comment this to test on weekends
+        // || isWeekend(date) // NOTE: Comment this to test on weekends
     const status = disabled ? null : byDate[iso]?.status ?? null
     const clickable = Boolean(onDateClick) && !disabled
 

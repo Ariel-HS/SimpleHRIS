@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt';
+
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
@@ -15,8 +17,11 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     // Users are first created with default password ('simpleHris')
     // Users can then change their passwords with register
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash('simpleHris', saltRounds);
+
     const entity = this.userRepository.create({
-      password: 'simpleHris',
+      password: hashedPassword,
       ...createUserDto,
     });
 
