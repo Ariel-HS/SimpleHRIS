@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt';
+
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -23,8 +25,11 @@ export class UserSeedService implements OnApplicationBootstrap {
       return;
     }
 
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     await this.userRepository.save(
-      this.userRepository.create({ name, email, password, role: 'admin' }),
+      this.userRepository.create({ name, email, password: hashedPassword, role: 'admin' }),
     );
     this.logger.log(`Seeded admin: ${email}`);
   }

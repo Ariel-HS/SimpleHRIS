@@ -1,8 +1,14 @@
+import * as bcrypt from 'bcrypt';
+
 import { Injectable } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto.js';
 import { User } from '../user/entities/user.entity.js';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service.js'
+
+// Compared against when the email is unknown so response time doesn't reveal valid accounts.
+const SALT_ROUND = 12
+const DUMMY_HASH = bcrypt.hashSync('not-a-real-password', SALT_ROUND);
 
 @Injectable()
 export class AuthService {
@@ -16,7 +22,9 @@ export class AuthService {
         const userEmail = registerDto.email;
         const userPassword = registerDto.password;
 
-        await this.userService.register(userEmail, userPassword);
+        const hashedPassword = await this.hashPassword(userPassword);
+
+        await this.userService.register(userEmail, hashedPassword);
         
         const saved = await this.userService.findOneByEmail(registerDto.email);
 
@@ -40,9 +48,8 @@ export class AuthService {
             throw new Error('Invalid email or password');
         }
 
-        // TODO: Implement password hashing
-        const isPasswordValid = user.password === loginDto.password;
-        if (!isPasswordValid) {
+        const ok = await this.comparePassword(loginDto.password, user.password)
+        if (!ok) {
             throw new Error('Invalid email or password');
         }
 
@@ -66,5 +73,14 @@ export class AuthService {
         const { password, ...safe } = user;
         
         return safe as User;
+    }
+
+    async hashPassword(password: string): Promise<string> {
+        const saltRounds = SALT_ROUND;
+        return bcrypt.hash(password, saltRounds);
+    }
+
+    async comparePassword(password: string, hash: string): Promise<boolean> {
+        return bcrypt.compare(password, hash ?? DUMMY_HASH);
     }
 }
