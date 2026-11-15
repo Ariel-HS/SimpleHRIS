@@ -16,7 +16,6 @@ export class AppController {
     buffer: Buffer | { type: 'Buffer'; data: number[] }; 
     mimetype: string 
   },) {
-    console.log("PASS D")
     const fileBuffer = Buffer.isBuffer(data.buffer) 
       ? data.buffer 
       : Buffer.from(data.buffer.data);
