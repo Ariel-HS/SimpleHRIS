@@ -110,8 +110,8 @@ export default function Employees() {
 
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
+          <table className="w-full border-collapse max-sm:block">
+            <thead className="max-sm:hidden">
               <tr className={trClass}>
                 <th className={thClass}>Name</th>
                 <th className={thClass}>Email</th>
@@ -119,25 +119,25 @@ export default function Employees() {
                 <th className={thClass}>Operations</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="max-sm:block">
               {employees.map((e) => {
               const isCurrentUser = e.id === user.id
 
               return (
                 <tr
                   key={e.id}
-                  className={`${trClass} cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50`}
+                  className={`${trClass} cursor-pointer hover:bg-slate-50 max-sm:block max-sm:py-3 dark:hover:bg-slate-800/50`}
                   onClick={() => navigate(`/admin/employees/${e.id}`)}
                 >
-                  <td className={tdClass}>
+                  <td data-label="Name" className={`${tdClass} max-sm:flex max-sm:items-start max-sm:justify-between max-sm:gap-4 max-sm:px-0 max-sm:py-1.5 max-sm:text-right max-sm:[overflow-wrap:anywhere] max-sm:before:shrink-0 max-sm:before:text-left max-sm:before:text-sm max-sm:before:text-slate-500 max-sm:before:content-[attr(data-label)] dark:max-sm:before:text-slate-400`}>
                     <Link to={`/admin/employees/${e.id}`} onClick={(ev) => ev.stopPropagation()} className={linkClass}>
                       {e.name}
                     </Link>
                   </td>
-                  <td className={tdClass}>{e.email}</td>
-                  <td className={`${tdClass} capitalize`}>{e.role}</td>
-                  <td className={tdClass}>
-                    <div className="flex gap-2">
+                  <td data-label="Email" className={`${tdClass} max-sm:flex max-sm:items-start max-sm:justify-between max-sm:gap-4 max-sm:px-0 max-sm:py-1.5 max-sm:text-right max-sm:[overflow-wrap:anywhere] max-sm:before:shrink-0 max-sm:before:text-left max-sm:before:text-sm max-sm:before:text-slate-500 max-sm:before:content-[attr(data-label)] dark:max-sm:before:text-slate-400`}>{e.email}</td>
+                  <td data-label="Role" className={`${tdClass} capitalize max-sm:flex max-sm:items-start max-sm:justify-between max-sm:gap-4 max-sm:px-0 max-sm:py-1.5 max-sm:text-right max-sm:[overflow-wrap:anywhere] max-sm:before:shrink-0 max-sm:before:text-left max-sm:before:text-sm max-sm:before:text-slate-500 max-sm:before:content-[attr(data-label)] dark:max-sm:before:text-slate-400`}>{e.role}</td>
+                  <td className={`${tdClass} max-sm:block max-sm:px-0 max-sm:pb-0`}>
+                    <div className="flex flex-wrap gap-2">
                       <Button variant="ghost" size="sm" onClick={stop(() => setDialog({ employee: e }))}
                         disabled={isCurrentUser || e.id === 1}
                         >
@@ -163,8 +163,8 @@ export default function Employees() {
                 </tr>
               )})}
               {!loading && employees.length === 0 && (
-                <tr>
-                  <td colSpan={4} className={`${tdClass} ${mutedClass}`}>
+                <tr className="max-sm:block">
+                  <td colSpan={4} className={`${tdClass} ${mutedClass} max-sm:block max-sm:px-0`}>
                     No employees found.
                   </td>
                 </tr>

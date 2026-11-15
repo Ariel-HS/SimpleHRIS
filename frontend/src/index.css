@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
+/* Dark mode is opt-in: the `dark:` variant applies only when <html> has the "dark" class. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
 }
 
 body {
