@@ -8,8 +8,7 @@ import StatusBadge from "../../components/StatusBadge"
 import type { AttendanceStatus } from "../../types"
 import { STATUS_LABELS, STATUS_STYLES } from "../../utils/status"
 import { useRequiredAuth } from "../../context/AuthContext"
-
-const ATTENDANCE_API_BASE_URL = "http://localhost:3000/api/attendance"
+import { ATTENDANCE_API_BASE_URL } from "../../config"
 
 export default function Dashboard() {
     const { token } = useRequiredAuth()

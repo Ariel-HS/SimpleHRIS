@@ -9,7 +9,7 @@ async function bootstrap() {
   });
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: 'http://localhost:5173', // Replace with your React port (e.g., 3000 or 5173)
+    origin: process.env.CORS_ORIGIN?.split(',') ?? 'http://localhost:5173', 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 

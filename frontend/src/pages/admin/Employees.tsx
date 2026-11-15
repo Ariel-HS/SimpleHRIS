@@ -6,8 +6,7 @@ import { inputClass, linkClass, mutedClass, tdClass, thClass, trClass } from "..
 import { Button, Card, ErrorText } from "../../components/ui"
 import { useRequiredAuth } from "../../context/AuthContext"
 import type { User } from "../../types"
-
-const USER_API_BASE_URL = "http://localhost:3000/api/user"
+import { USER_API_BASE_URL } from "../../config"
 
 export default function Employees() {
     const { user, token } = useRequiredAuth()

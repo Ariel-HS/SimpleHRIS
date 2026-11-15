@@ -7,9 +7,7 @@ import { Button, Card, DetailList, DetailRow, ErrorText } from "../../components
 import { useRequiredAuth } from "../../context/AuthContext"
 import { startOfMonth, toMonthKey } from "../../utils/date"
 import type { Attendance, User } from "../../types"
-
-const USER_API_BASE_URL = "http://localhost:3000/api/user";
-const ATTENDANCE_API_BASE_URL = "http://localhost:3000/api/attendance";
+import { USER_API_BASE_URL, ATTENDANCE_API_BASE_URL } from "../../config"
 
 export default function EmployeeProfile() {
   const { id = "" } = useParams()

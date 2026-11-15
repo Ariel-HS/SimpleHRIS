@@ -12,6 +12,3 @@ import { UserSeedService } from './user-seed.service.js';
   exports: [UserService],
 })
 export class UserModule {}
-
-// TODO: Auth and User Management are combined in one module for simplicity
-// Realistically, when there's more feature, these should be separated

@@ -6,8 +6,7 @@ import { useRequiredAuth } from "../../context/AuthContext"
 import { formatLongDate, parseISODate } from "../../utils/date"
 import { useEffect, useState } from "react"
 import type { Attendance } from "../../types"
-
-const ATTENDANCE_API_BASE_URL = "http://localhost:3000/api/attendance";
+import { ATTENDANCE_API_BASE_URL } from "../../config"
 
 export default function AttendanceDetail() {
     const { id = "", date = "" } = useParams()

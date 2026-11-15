@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        // TODO: Implement Env Var or General API Client
+        // TODO: Implement General API Client
         const response = await fetch(`${AUTH_API_BASE_URL}/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -57,9 +57,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [token]);
 
   async function login(email: string, password: string): Promise<User> {
-    // TODO
-    // Expected response: { token, user: { name, email, role } }
-    // const response = await api<AuthData>("/auth/login", { method: "POST", body: { email, password } })
     const response = await fetch(`${AUTH_API_BASE_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

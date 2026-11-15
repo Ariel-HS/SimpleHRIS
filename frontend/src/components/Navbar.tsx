@@ -16,7 +16,7 @@ export default function Navbar() {
   return (
     <header className="flex h-14 items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6 dark:border-slate-800 dark:bg-slate-900">
       <Link to={user ? homeForRole(user.role) : "/"} className="shrink-0 text-xl font-bold tracking-wide">
-        HRIS
+        SimpleHRIS
       </Link>
       <nav className="flex min-w-0 items-center gap-3">
         <ThemeToggle />

@@ -16,7 +16,7 @@ export function useTheme() {
     try {
       localStorage.setItem(STORAGE_KEY, next)
     } catch {
-      // TODO: Storage can be unavailable (private mode); 
+      // Storage, can be unavailable in private mode; 
     }
     setTheme(next)
   }, [theme])

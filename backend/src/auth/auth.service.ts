@@ -6,7 +6,6 @@ import { UserService } from '../user/user.service.js'
 
 @Injectable()
 export class AuthService {
-    // TODO call user service instead of injecting repository directly
     constructor(
         private userService: UserService,
         private jwtService: JwtService

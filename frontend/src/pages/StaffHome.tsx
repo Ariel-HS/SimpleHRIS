@@ -5,8 +5,7 @@ import { ErrorText } from "../components/ui"
 import { useRequiredAuth } from "../context/AuthContext"
 import { startOfMonth, toMonthKey } from "../utils/date"
 import type { Attendance } from "../types"
-
-const ATTENDANCE_API_BASE_URL = "http://localhost:3000/api/attendance";
+import { ATTENDANCE_API_BASE_URL } from "../config"
 
 export default function StaffHome() {
   const { user, token } = useRequiredAuth()
@@ -100,7 +99,6 @@ export default function StaffHome() {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold">My attendance</h1>
         {monthlyError && <ErrorText>{monthlyError}</ErrorText>}
-        {/* TODO */}
         <Calendar month={month} onMonthChange={setMonth} attendanceList={monthlyAttendance} loading={monthlyLoading} />
       </div>
       <TodayAttendance attendance={todayAttendance} loading={todayLoading} error={todayError} onSubmitted={handleSubmitted} />

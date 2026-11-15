@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { APP_GUARD } from '@nestjs/core'
 import { AttendanceModule } from './attendance/attendance.module.js';
-import { ApiGatewayModule } from './api-gateway/api-gateway.module.js';
 import { UserModule } from './user/user.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhotosModule } from './photos/photos.module.js';
@@ -17,11 +16,11 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       type: 'oracle',
       host: process.env.DB_HOST ?? 'localhost',
       port: parseInt(process.env.DB_PORT ?? '1521'),
-      username: process.env.DB_USERNAME ?? 'SYSTEM',
-      password: process.env.DB_PASSWORD ?? 'oracle',
-      database: process.env.DB_NAME ?? 'SimpleHRIS',
+      username: process.env.DB_USERNAME ?? 'hris',
+      password: process.env.DB_PASSWORD ?? '',
+      database: process.env.DB_NAME ?? 'FREEPDB1',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: process.env.DB_SYNCHRONIZE === 'true',
     }),
 
     // Distributed tracing, auto-correlated logs, request/job metrics, error
@@ -33,7 +32,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'backend',
     }),
     AttendanceModule,
-    ApiGatewayModule,
     UserModule,
     PhotosModule,
     AuthModule,

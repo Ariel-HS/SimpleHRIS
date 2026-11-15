@@ -4,7 +4,8 @@ import { Attendance } from './entities/attendance.entity.js';
 import { Like, Repository } from 'typeorm';
 import { UserService } from '../user/user.service.js'
 
-const TZ = 'Asia/Jakarta';   // TODO: Implement Env
+const TZ = process.env.TIME_ZONE ?? 'Asia/Jakarta';   
+const CheckInTime = process.env.CHECK_IN_TIME ?? '09:00:00'
 
 @Injectable()
 export class AttendanceService {
@@ -85,8 +86,7 @@ export class AttendanceService {
         const exists = await this.attendanceRepository.exists({ where: { user: { id: userId }, date } });
         if (exists) throw new ConflictException('Already checked in today');
 
-        // TODO Implement Env for ontime
-        const isOnTime = time <= '09:00:00' ? true : false;
+        const isOnTime = time <= CheckInTime ? true : false;
 
         const attendance = this.attendanceRepository.create({
             user: user,
